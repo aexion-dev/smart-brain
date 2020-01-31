@@ -109,7 +109,7 @@ class App extends Component {
             : <Register onRouteChange={this.onRouteChange} />
           )
         }
-      </div>
+      </div> 
     );
   }
 }
