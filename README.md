@@ -1,5 +1,5 @@
 # Smart Brain
-Facial recognition app used to identify faces within photos, includes user ranking system and encrypted log-in/registration.
+Facial recognition app that uses machine learning to identify faces within photos, includes user ranking system and encrypted user log-in/registration.
 
 Technologies:
 
