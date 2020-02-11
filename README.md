@@ -1,4 +1,5 @@
-Front-end build of facial recognition app used to identify faces within photos, includes user ranking system and encrypted log-in/registration.
+# Smart Brain
+Facial recognition app used to identify faces within photos, includes user ranking system and encrypted log-in/registration.
 
 Technologies:
 
