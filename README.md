@@ -1,9 +1,10 @@
-Front-end build of facial recognition app used to identify faces within photos, includes user ranking system and encryped log-in/registration.
+Front-end build of facial recognition app used to identify faces within photos, includes user ranking system and encrypted log-in/registration.
 
 Technologies:
 
 - React + Redux
 - Clarifai API
+- bCrypt
 - PostgreSQL
 - Deployed on Heroku
 
