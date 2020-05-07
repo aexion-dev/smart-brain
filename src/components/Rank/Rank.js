@@ -1,14 +1,44 @@
 import React from 'react';
 
-const Rank = ({name, entries}) => {
-  return (
-    <div>
-      {`${name} , your current entry count is..`}
-      <div className='white f1'>
-        {entries}
+class Rank extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      emoji: ''
+    }
+  }
+
+  componentDidMount() {
+    this.generateEmoji(this.props.entries);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.entries === this.props.entries || prevProps === this.props.name) {
+      return null
+    }
+    this.generateEmoji(this.props.entries);
+  }
+
+  generateEmoji = (entries) => {
+    fetch(`https://cghnv3vtc6.execute-api.us-east-1.amazonaws.com/prod/rank?rank=${this.props.entries}`)
+      .then(response => response.json())
+      .then(data => this.setState({emoji: data.input}))
+      .catch(console.log)
+  }
+
+  render() {
+    return (
+      <div>
+        {`${this.props.name} , your current entry count is..`}
+        <div className='white f1'>
+          {this.props.entries}
+        </div>
+        <div className='white f3'>
+          {`Rank Badge: ${this.state.emoji}`}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Rank;

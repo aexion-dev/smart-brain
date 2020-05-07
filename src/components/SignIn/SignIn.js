@@ -17,6 +17,10 @@ class SignIn extends React.Component {
     this.setState({signInPassword: event.target.value});
   }
 
+  saveAuthTokenInSession = (token) => {
+    window.sessionStorage.setItem('token', token);
+  }
+
   onSubmitSignIn = () => {
     fetch('http://localhost:3001/signin', {
       method: 'post',
@@ -27,17 +31,30 @@ class SignIn extends React.Component {
       })
     })
       .then(response => response.json())
-      .then(user => {
-        if(user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange('home');
+      .then(data => {
+        if(data.userId && data.success === 'true') {
+          this.saveAuthTokenInSession(data.token);
+          fetch(`http://localhost:3001/profile/${data.userId}`, {
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': data.token
+            }
+          })
+            .then(resp => resp.json())
+            .then(user => {
+              if (user && user.email) {
+                this.props.loadUser(user);
+                this.props.onRouteChange('home');
+              }
+            })
+          .catch(console.log)
         }
       })
       .catch(console.log)
   }
 
   render() {
-    const onRouteChange = this.props;
     return (
       <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 white">
@@ -71,7 +88,7 @@ class SignIn extends React.Component {
                 value="Sign in" />
             </div>
             <div className="lh-copy mt3">
-              <p onClick={() => onRouteChange('register')} className="f6 link dim db white pointer">Register</p>
+              <p onClick={() => this.props.onRouteChange('register')} className="f6 link dim db white pointer">Register</p>
             </div>
           </div>
         </main>
